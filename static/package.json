@@ -1,0 +1,13 @@
+{
+  "name": "notespot",
+  "description": "Pause My JS",
+  "version": "0.0.1",
+  "author": "went.out@gmail.com",
+  "engines": [
+    "node >= 0.12.0"
+  ],
+  "main": "index.html",
+  "dependencies": {
+    "express": "^4.11.2"
+  }
+}
