@@ -4,15 +4,7 @@ var p = require('path');
 var express = require('express');
 var app = express();
 
-app.get('/', function(req, res){
-	res.sendFile( p.join( __dirname, 'static', 'index.html' ) );
-});
-
 app.use( express.static( p.join( __dirname, 'static') ) );
-
-app.get('/style.css', function(req, res){
-	res.sendFile( p.join( __dirname, '/style.css' ) );
-});
 
 app.get('/delay/:timeout', function(req, res) {
 	var t = parseInt(req.params.timeout, 10);
