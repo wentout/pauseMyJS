@@ -1,0 +1,2 @@
+# pauseMyJS
+JavaScript execution pause
