@@ -45,5 +45,13 @@ $(function(){
 		}
 	});
 	
+	$('#jqstart')
+	.on('click', function() {
+		var val = parseInt($seconds.val()) || 1;
+		$seconds.val(val);
+		$.pause(val);
+		$caption.html('Timer was frozen at [ ' + val + ' ] seconds... And UI too, because of no $.pause runs in the main window...');
+	});
+	
 });
 }());
