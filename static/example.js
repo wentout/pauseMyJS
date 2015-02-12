@@ -13,23 +13,23 @@ $(function(){
 	var worker = null;
 	if (!!window.Worker) {
 		var worker = new Worker('worker.js');
-		worker.onmessage = function(e) {
+		worker.onmessage = function(e, delta) {
 			if (e.data == 'tick') {
 				timer();
 			}
-			if (e.data == 'pause') {
-				makeCaption($seconds.val());
+			if (e.data[0] == 'pause') {
+				makeCaption($seconds.val(), e.data[1]);
 			}
 		};
 	} else {
 		setInterval(timer, 1000);
 	}
 	
-	var makeCaption = function(val) {
+	var makeCaption = function(val, delta) {
 		if (worker) {
-			$caption.html('Timer was frozen at [ ' + val + ' ] seconds... But not UI, because window.Worker exists!');
+			$caption.html('Timer was frozen at [ ' + delta + ' ] ms... But not UI, because window.Worker exists!');
 		} else {
-			$caption.html('Timer was frozen at [ ' + val + ' ] seconds... And UI too, because of no window.Worker...');
+			$caption.html('Timer was frozen at [ ' + delta + ' ] ms... And UI too, because of no window.Worker...');
 		}
 	};
 	
@@ -40,8 +40,9 @@ $(function(){
 		if (worker) {
 			worker.postMessage(['pause', val]);
 		} else {
+			var t = Date.now();
 			window.pause(val);
-			makeCaption(val);
+			makeCaption(val, Date.now() - t);
 		}
 	});
 	
@@ -49,7 +50,7 @@ $(function(){
 	.on('click', function() {
 		var val = parseInt($seconds.val()) || 1;
 		$seconds.val(val);
-		$.pause(val);
+		$.pauseEverything(val);
 		$caption.html('Timer was frozen at [ ' + val + ' ] seconds... And UI too, because of no $.pause runs in the main window...');
 	});
 	

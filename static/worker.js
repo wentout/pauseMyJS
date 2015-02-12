@@ -20,8 +20,8 @@ var delay = function (timeout) {
 	xmlhttp.open('GET', '/delay/' + timeout, false);
 	var stamp = Date.now();
 	xmlhttp.send(null);
-	t = (Date.now() - stamp);
-	return t;
+	delta = (Date.now() - stamp);
+	return delta;
 };
 
 var pause = function (seconds) {
@@ -34,8 +34,8 @@ pause.ms = function (ms) {
 
 onmessage = function(e) {
 	if (e.data[0] == 'pause') {
-		pause(e.data[1]);
-		postMessage('pause');
+		var delta = pause(e.data[1]);
+		postMessage(['pause', delta]);
 	}
 };
 
